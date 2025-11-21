@@ -23,3 +23,19 @@ git branch -M main
 git remote add origin <repo addr>
 git push -u origin main
 ```
+
+## Vite CORS
+
+In frontend development, when the Vite dev server (typically running on `localhost:5173`) calls backend APIs on different domains or ports, browsers will block these requests due to the Same-Origin Policy (this is the CORS – Cross-Origin Resource Sharing – issue). To work around this during local development, the Vite dev server can act as a reverse proxy: your frontend sends requests to `http://localhost:5173/api/...`, Vite matches `/api` via `server.proxy`, and then transparently forwards the request to the configured backend `target`.
+
+```typescript
+server: {
+  proxy: {
+    '/api': {
+      target: proxyTarget,
+      changeOrigin: true, // replace HOST in the request with `target`
+      rewrite: (path) => path.replace(/^\/api/, ''), // don't need /api prefix when forwarding
+    },
+  },
+},
+```
