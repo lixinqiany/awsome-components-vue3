@@ -1,8 +1,8 @@
-import { defineComponent } from 'vue';
+import { defineComponent, onMounted, shallowRef, ref } from 'vue';
 import markdownIt from 'markdown-it';
 import KatexPlugin from './markdown-it-katex/index.ts';
-import { shallowRef } from 'vue';
 import katex from 'katex';
+import { useStream } from '@/hooks/useStream.ts';
 
 export default defineComponent({
   name: 'StreamingMarkdown',
@@ -44,6 +44,12 @@ $$
 
 - 积分示例: $\\int_{-\\infty}^{+\\infty} e^{-x^2} \\, dx = \\sqrt{\\pi}$
 `;
-    return () => <div innerHTML={md.render(sample)}></div>;
+
+    const { streamWriter } = useStream();
+    const typewriter = ref<string>('');
+    onMounted(() => {
+      streamWriter(sample, typewriter);
+    });
+    return () => <div innerHTML={md.render(typewriter.value)}></div>;
   },
 });
