@@ -5,11 +5,11 @@ const router = createRouter({
   routes: [
     {
       path: '/',
-      name: 'about',
+      name: 'home',
       // route level code-splitting
       // this generates a separate chunk (About.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
-      component: () => import('../views/message/index.tsx'),
+      component: () => import('../views/home/index.tsx'),
     },
   ],
 });
