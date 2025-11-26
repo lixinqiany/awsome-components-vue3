@@ -1,6 +1,7 @@
 import { defineComponent, type PropType } from 'vue';
 import markdownIt, { type Options, type PluginWithParams } from 'markdown-it';
 import { useVNode } from '@/hooks/useVNode.ts';
+import styles from './index.module.css';
 
 interface PluginConfig {
   plugin: PluginWithParams;
@@ -34,6 +35,8 @@ export default defineComponent({
       md.use(plugin, options);
     });
 
-    return () => htmlToVNodes(md.render(props.content, {}));
+    return () => (
+      <div class={styles['markdown-body']}>{htmlToVNodes(md.render(props.content, {}))}</div>
+    );
   },
 });

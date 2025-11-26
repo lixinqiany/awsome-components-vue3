@@ -11,13 +11,16 @@ export default defineComponent({
     const sample = `
 - **嵌入行内数学:** $E = mc^2$ 和 \\(E = mc^2\\)
 - 矩阵 $ \\mathbf{A} = \\begin{bmatrix}1 & 0\\\\ 0 & 1\\end{bmatrix} $
-- 未换行的行间公式语法，降级渲染成行内: $$F_{n} = F_{n-1} + F_{n-2}, \\quad F_{0}=0, F_{1}=1$$
 - **行间公式**
 $$
 \\nabla \\cdot \\vec{E} = \\frac{\\rho}{\\varepsilon_0}
 $$
 
-- 积分示例: $\\int_{-\\infty}^{+\\infty} e^{-x^2} \\, dx = \\sqrt{\\pi}$
+| 姓名   | 年龄 | 城市     |
+|--------|------|----------|
+| 张三   | 28   | 北京     |
+| 李四   | 32   | 上海     |
+| 王五   | 24   | 广州     |
 `;
 
     const markdownOptions = {
