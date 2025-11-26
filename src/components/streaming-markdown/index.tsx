@@ -3,6 +3,7 @@ import markdownIt from 'markdown-it';
 import KatexPlugin from './markdown-it-katex/index.ts';
 import katex from 'katex';
 import { useStream } from '@/hooks/useStream.ts';
+import { useVNode } from '@/hooks/useVNode.ts';
 
 export default defineComponent({
   name: 'StreamingMarkdown',
@@ -46,10 +47,11 @@ $$
 `;
 
     const { streamWriter } = useStream();
+    const { htmlToVNodes } = useVNode();
     const typewriter = ref<string>('');
     onMounted(() => {
       streamWriter(sample, typewriter);
     });
-    return () => <div innerHTML={md.render(typewriter.value)}></div>;
+    return () => htmlToVNodes(md.render(typewriter.value, {}));
   },
 });

@@ -1,4 +1,4 @@
 {
   "version": "0.2",
-  "words": ["markdownit", "katex", "Katex"]
+  "words": ["markdownit", "katex", "Katex", "VNode"]
 }
