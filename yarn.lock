@@ -795,7 +795,14 @@
   resolved "https://registry.yarnpkg.com/@types/linkify-it/-/linkify-it-5.0.0.tgz#21413001973106cda1c3a9b91eedd4ccd5469d76"
   integrity sha512-sVDA58zAw4eWAffKOaQH5/5j3XeayukzDk+ewSsnv3p4yJEZHCCzMDiZM8e0OUrRvmpGZ85jf4yDHkHsgBNr9Q==
 
-"@types/markdown-it@^14.1.2":
+"@types/markdown-it-link-attributes@^3.0.5":
+  version "3.0.5"
+  resolved "https://registry.yarnpkg.com/@types/markdown-it-link-attributes/-/markdown-it-link-attributes-3.0.5.tgz#521179990cd2ced55761d9b8c93e502b679df329"
+  integrity sha512-VZ2BGN3ywUg7mBD8W6PwR8ChpOxaQSBDbLqPgvNI+uIra3zY2af1eG/3XzWTKjEraTWskMKnZqZd6m1fDF67Bg==
+  dependencies:
+    "@types/markdown-it" "*"
+
+"@types/markdown-it@*", "@types/markdown-it@^14.1.2":
   version "14.1.2"
   resolved "https://registry.yarnpkg.com/@types/markdown-it/-/markdown-it-14.1.2.tgz#57f2532a0800067d9b934f3521429a2e8bfb4c61"
   integrity sha512-promo4eFwuiW+TfGxhi+0x3czqTYJkG8qB17ZUJiVF10Xm7NLVRSLUsfRTU/6h1e24VvRnXCx+hG7li58lkzog==
@@ -2272,6 +2279,11 @@ magic-string@^0.30.17, magic-string@^0.30.21, magic-string@^0.30.4:
   integrity sha512-vd2F4YUyEXKGcLHoq+TEyCjxueSeHnFxyyjNp80yg0XV4vUhnDer/lvvlqM/arB5bXQN5K2/3oinyCRyx8T2CQ==
   dependencies:
     "@jridgewell/sourcemap-codec" "^1.5.5"
+
+markdown-it-link-attributes@^4.0.1:
+  version "4.0.1"
+  resolved "https://registry.yarnpkg.com/markdown-it-link-attributes/-/markdown-it-link-attributes-4.0.1.tgz#25751f2cf74fd91f0a35ba7b3247fa45f2056d88"
+  integrity sha512-pg5OK0jPLg62H4k7M9mRJLT61gUp9nvG0XveKYHMOOluASo9OEF13WlXrpAp2aj35LbedAy3QOCgQCw0tkLKAQ==
 
 markdown-it@^14.1.0:
   version "14.1.0"
