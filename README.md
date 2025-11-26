@@ -1,5 +1,7 @@
 # awsome-components-vue3
 
+**Author:** Lixinqian YU
+
 This repository offers a collection of simple and flexible **Vue 3** components designed to help you rapidly build modern front-end pages (e.g. ChatGPT, Anthropic, and other AI applications). These components enable you to quickly prototype and develop your ideas with minimal setup. The goal is to eventually publish this as an npm package for broader community use.
 
 # Notes
