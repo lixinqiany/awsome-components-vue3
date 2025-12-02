@@ -1,10 +1,12 @@
 import { defineComponent, type PropType } from 'vue';
 import styles from './Message.module.css';
+import StreamingMarkdown from '@/components/streaming-markdown/index.tsx';
 
 interface MessageProps {
   content: string;
   isBubble?: boolean;
   position?: 'left' | 'right';
+  isRaw?: boolean;
 }
 
 export default defineComponent({
@@ -24,10 +26,15 @@ export default defineComponent({
       required: false,
       default: 'left',
     },
+    isRaw: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
   },
   setup(props: MessageProps) {
     return () => {
-      const { isBubble, position, content } = props;
+      const { isBubble, position, content, isRaw } = props;
 
       // Default sample text if no content provided
       const textToDisplay =
@@ -37,7 +44,7 @@ export default defineComponent({
       return (
         <div class={[styles.messageRow, position === 'right' ? styles.right : styles.left]}>
           <div class={[styles.content, isBubble ? styles.bubble : styles.fullWidth]}>
-            {textToDisplay}
+            {isRaw ? textToDisplay : <StreamingMarkdown content={textToDisplay} />}
           </div>
         </div>
       );
