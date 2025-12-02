@@ -1,0 +1,41 @@
+.messageRow {
+  display: flex;
+  width: 100%;
+  margin-bottom: 8px;
+}
+
+.left {
+  /* when using `display: flex`, `flex-start` means children will align to the beginning end on the main axis */
+  justify-content: flex-start;
+}
+
+.right {
+  justify-content: flex-end;
+}
+
+.content {
+  font-size: 16px;
+  line-height: 1.5;
+  /*
+  when using `word-wrap: break-word;`,
+  the text will break into multiple lines if it exceeds the width of the container
+  It's required style!!!
+  */
+  word-wrap: break-word;
+}
+
+.bubble {
+  background-color: #f4f4f4;
+  padding: 6px 8px;
+  border-radius: 12px;
+  max-width: 75%;
+  color: #333;
+}
+
+.fullWidth {
+  background-color: #fff;
+  width: 100%;
+  /* Optional: if you want padding even for full width */
+  padding: 6px 0;
+  color: #333;
+}
