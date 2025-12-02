@@ -1,0 +1,94 @@
+.toolbar {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.btn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: #999;
+  padding: 4px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition:
+    background-color 0.2s,
+    color 0.2s;
+  position: relative;
+  overflow: visible;
+}
+
+.btn:hover {
+  background-color: rgba(78, 76, 76, 0.1);
+  color: #4f4b4b;
+}
+
+/* 通用 Tooltip 样式 */
+.btn[data-tooltip]:hover::after {
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-bottom: 5px;
+  background-color: #000;
+  color: #fff;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  white-space: nowrap;
+  pointer-events: none;
+  z-index: 10;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  animation: fadeIn 0.2s ease-in-out;
+}
+
+/* the hint text when hovering on the button */
+.btn[data-tooltip]:hover::after {
+  content: attr(data-tooltip);
+}
+
+/* don't show when the button is not hovered */
+.btn[data-tooltip='']:hover::after {
+  display: none;
+}
+
+/* Icon Transition Animation */
+:global(.icon-fade-enter-active),
+:global(.icon-fade-leave-active) {
+  transition:
+    opacity 0.2s ease,
+    transform 0.2s ease;
+}
+
+:global(.icon-fade-enter-from),
+:global(.icon-fade-leave-to) {
+  opacity: 0;
+  transform: scale(0.8);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translate(-50%, 5px);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .btn:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: #ccc;
+  }
+
+  .copiedTooltip,
+  .btn[data-tooltip]:hover::after {
+    background-color: #fff;
+    color: #000;
+  }
+}
