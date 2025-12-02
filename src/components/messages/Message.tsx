@@ -1,12 +1,14 @@
 import { defineComponent, type PropType } from 'vue';
 import styles from './Message.module.css';
 import StreamingMarkdown from '@/components/streaming-markdown/index.tsx';
+import MessageToolbar from './MessageToolbar';
 
 interface MessageProps {
   content: string;
   isBubble?: boolean;
   position?: 'left' | 'right';
   isRaw?: boolean;
+  showToolbar?: boolean;
 }
 
 export default defineComponent({
@@ -31,20 +33,41 @@ export default defineComponent({
       required: false,
       default: false,
     },
+    showToolbar: {
+      type: Boolean,
+      required: false,
+      default: true,
+    },
   },
-  setup(props: MessageProps) {
-    return () => {
-      const { isBubble, position, content, isRaw } = props;
+  setup(props: MessageProps, { slots }) {
+    const handleCopy = () => {
+      navigator.clipboard.writeText(props.content);
+    };
 
-      // Default sample text if no content provided
-      const textToDisplay =
-        content ||
-        '这是一个示例消息文本。This is a sample message text used for testing the layout.';
+    return () => {
+      const { isBubble, position, content, isRaw, showToolbar } = props;
+
+      const textToDisplay = content;
 
       return (
+        // Message container aligned left or right
         <div class={[styles.messageRow, position === 'right' ? styles.right : styles.left]}>
-          <div class={[styles.content, isBubble ? styles.bubble : styles.fullWidth]}>
-            {isRaw ? textToDisplay : <StreamingMarkdown content={textToDisplay} />}
+          {/* Vertical layout: message content on top, toolbar below */}
+          <div class={styles.messageColumn}>
+            <div class={[styles.content, isBubble ? styles.bubble : styles.fullWidth]}>
+              {isRaw ? textToDisplay : <StreamingMarkdown content={textToDisplay} />}
+            </div>
+
+            {/* Use slot for custom toolbar; fallback to default toolbar when not provided */}
+            {slots.toolbar ? (
+              <div class={[styles.toolbarWrapper, isBubble ? styles.bubble : styles.fullWidth]}>
+                {slots.toolbar({ content: textToDisplay })}
+              </div>
+            ) : showToolbar ? (
+              <div class={[styles.toolbarWrapper, isBubble ? styles.bubble : styles.fullWidth]}>
+                <MessageToolbar onCopy={handleCopy} />
+              </div>
+            ) : null}
           </div>
         </div>
       );

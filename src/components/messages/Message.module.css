@@ -4,13 +4,26 @@
   margin-bottom: 8px;
 }
 
-.left {
+.messageRow.left {
   /* when using `display: flex`, `flex-start` means children will align to the beginning end on the main axis */
   justify-content: flex-start;
 }
 
-.right {
+.messageRow.right {
   justify-content: flex-end;
+}
+
+.messageColumn {
+  display: flex;
+  flex-direction: column;
+}
+
+.left .messageColumn {
+  align-items: flex-start;
+}
+
+.right .messageColumn {
+  align-items: flex-end;
 }
 
 .content {
@@ -24,7 +37,7 @@
   word-wrap: break-word;
 }
 
-.bubble {
+.messageColumn .content.bubble {
   background-color: #f4f4f4;
   padding: 6px 8px;
   border-radius: 12px;
@@ -32,12 +45,30 @@
   color: #333;
 }
 
-.fullWidth {
+.messageColumn .content.fullWidth {
   background-color: #fff;
   width: 100%;
   /* Optional: if you want padding even for full width */
   padding: 6px 0;
   color: #333;
+}
+
+.toolbarWrapper {
+  margin-top: 0;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.messageRow .fullWidth {
+  opacity: 1;
+}
+
+.messageColumn .content:hover + .toolbarWrapper {
+  opacity: 1;
+}
+/* avoid the toolbar disappear when hover on it */
+.toolbarWrapper:hover {
+  opacity: 1;
 }
 
 @media (prefers-color-scheme: dark) {
