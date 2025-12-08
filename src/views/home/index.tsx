@@ -5,6 +5,7 @@ import KatexPlugin from '@/components/streaming-markdown/markdown-it-katex/index
 import katex from 'katex';
 import mila from 'markdown-it-link-attributes';
 import { useStream } from '@/hooks/useStream.ts';
+import SvgIcon from '@/components/icons/index.tsx';
 
 export default defineComponent({
   name: 'HomePage',
@@ -113,6 +114,8 @@ $$
             content="当然可以。这是一个气泡样式的左侧消息。"
           />
         </div>
+
+        <SvgIcon src="timer.svg" class="test-svg" style="color: red;" />
 
         <hr />
         <h3>Streaming Markdown Demo</h3>
