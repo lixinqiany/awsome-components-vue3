@@ -1,4 +1,4 @@
-import { defineComponent, onMounted, ref, shallowRef } from 'vue';
+import { defineComponent, onMounted, ref, shallowRef, computed } from 'vue';
 import StreamingMarkdown from '@/components/streaming-markdown/index.tsx';
 import MessageView from '@/components/messages/Message.tsx';
 import KatexPlugin from '@/components/streaming-markdown/markdown-it-katex/index.ts';
@@ -7,11 +7,20 @@ import mila from 'markdown-it-link-attributes';
 import { useStream } from '@/hooks/useStream.ts';
 import SvgIcon from '@/components/icons/index.tsx';
 import ElasticSidebar from '@/components/ElasticSidebar/index.tsx';
+import { Minibar } from '@/components/Minibar/index.tsx';
 
 export default defineComponent({
   name: 'HomePage',
   setup() {
     const sidebarWidth = ref<string | number>(0.1);
+
+    const isCollapsed = computed(() => {
+      const width =
+        typeof sidebarWidth.value === 'string'
+          ? parseFloat(sidebarWidth.value)
+          : sidebarWidth.value;
+      return width < 0.06;
+    });
 
     const sample = `
 - **嵌入行内数学:** $E = mc^2$ 和 \\(E = mc^2\\)
@@ -74,29 +83,55 @@ $$
 
     return () => (
       <div style={{ width: '100wh', height: '100vh' }}>
-        <ElasticSidebar v-model:size={sidebarWidth.value}>
+        <ElasticSidebar
+          v-model:size={sidebarWidth.value}
+          minSize={0.04}
+          onUpdate:size={(size) => console.log(size)}
+        >
           {{
-            sidebarHeader: () => <div style={{ fontWeight: 'bold', fontSize: '18px' }}>My App</div>,
-            sidebarMain: () => (
-              <ul style={{ listStyle: 'none', padding: 0 }}>
-                {Array.from({ length: 60 }).map((_, i) => (
-                  <li
-                    key={i}
-                    style={{
-                      padding: '8px 0',
-                      borderBottom: '1px solid #f0f0f0',
-                      cursor: 'pointer',
-                    }}
-                  >
-                    Sidebar Item {i + 1}
-                  </li>
-                ))}
-              </ul>
-            ),
-            sidebarFooter: () => (
-              <div style={{ color: '#666', fontSize: '12px' }}>© 2024 My Company</div>
-            ),
-            default: () => (
+            // 当折叠时只传 sidebar 插槽
+            ...(isCollapsed.value
+              ? {
+                  sidebar: () => (
+                    <Minibar
+                      headerIcons={[
+                        <SvgIcon src="timer.svg" />,
+                        <SvgIcon src="timer.svg" />,
+                        <SvgIcon src="timer.svg" />,
+                      ]}
+                      footerIcons={[<SvgIcon src="timer.svg" />, <SvgIcon src="timer.svg" />]}
+                    />
+                  ),
+                }
+              : {
+                  // 当未折叠时，不传 sidebar，而是传这三个插槽
+                  sidebarHeader: () => (
+                    <div style={{ fontWeight: 'bold', fontSize: '18px' }}>My App</div>
+                  ),
+                  sidebarMain: () => (
+                    <ul style={{ listStyle: 'none', padding: 0 }}>
+                      {Array.from({ length: 60 }).map((_, i) => (
+                        <li
+                          key={i}
+                          style={{
+                            padding: '8px 0',
+                            borderBottom: '1px solid #f0f0f0',
+                            cursor: 'pointer',
+                            whiteSpace: 'nowrap',
+                            overflow: 'hidden',
+                            textOverflow: 'ellipsis',
+                          }}
+                        >
+                          Sidebar Item {i + 1}
+                        </li>
+                      ))}
+                    </ul>
+                  ),
+                  sidebarFooter: () => (
+                    <div style={{ color: '#666', fontSize: '12px' }}>© 2024 My Company</div>
+                  ),
+                }),
+            content: () => (
               <div style={{ padding: '20px', width: '100%', maxWidth: '1200px', margin: '0 auto' }}>
                 <h3>Message Component Demo</h3>
 
