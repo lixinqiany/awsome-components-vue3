@@ -82,7 +82,7 @@ $$
     });
 
     return () => (
-      <div style={{ width: '100wh', height: '100vh' }}>
+      <div class="home-container" style={{ width: '100vw', height: '100vh' }}>
         <ElasticSidebar
           v-model:size={sidebarWidth.value}
           minSize={0.04}
@@ -132,72 +132,82 @@ $$
                   ),
                 }),
             content: () => (
-              <div style={{ padding: '20px', width: '100%', maxWidth: '1200px', margin: '0 auto' }}>
-                <h3>Message Component Demo</h3>
+              <div
+                style={{
+                  padding: '20px',
+                  width: '100%',
+                  height: '100%', // 占满高度
+                  overflowY: 'auto', // 允许垂直滚动
+                  boxSizing: 'border-box', // 确保 padding 不会撑破高度
+                }}
+              >
+                <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
+                  <h3>Message Component Demo</h3>
 
-                {/* Case 1: User message (Bubble, Right) */}
-                <div
-                  style={{
-                    marginBottom: '20px',
-                    border: '1px dashed #ccc',
-                    padding: '10px',
-                  }}
-                >
-                  <p style={{ fontSize: '12px', color: '#999' }}>
-                    Case 1: User Message (Bubble: true, Position: right)
-                  </p>
-                  <MessageView
-                    isBubble={true}
-                    position="right"
-                    content="Vue 3 是一个用于构建用户界面的渐进式框架。它建立在标准 HTML、CSS 和 JavaScript 之上，并提供了一套声明式的、组件化的编程模型，帮助你高效地开发用户界面。Vue 3 引入了组合式 API (Composition API)，这使得代码组织和逻辑复用变得更加容易，特别是在大型项目中。此外，Vue 3 在性能方面也有显著提升，更小的包体积和更快的渲染速度。"
+                  {/* Case 1: User message (Bubble, Right) */}
+                  <div
+                    style={{
+                      marginBottom: '20px',
+                      border: '1px dashed #ccc',
+                      padding: '10px',
+                    }}
+                  >
+                    <p style={{ fontSize: '12px', color: '#999' }}>
+                      Case 1: User Message (Bubble: true, Position: right)
+                    </p>
+                    <MessageView
+                      isBubble={true}
+                      position="right"
+                      content="Vue 3 是一个用于构建用户界面的渐进式框架。它建立在标准 HTML、CSS 和 JavaScript 之上，并提供了一套声明式的、组件化的编程模型，帮助你高效地开发用户界面。Vue 3 引入了组合式 API (Composition API)，这使得代码组织和逻辑复用变得更加容易，特别是在大型项目中。此外，Vue 3 在性能方面也有显著提升，更小的包体积和更快的渲染速度。"
+                    />
+                  </div>
+
+                  {/* Case 2: Bot message (Full Width, Left) */}
+                  <div
+                    style={{
+                      marginBottom: '20px',
+                      border: '1px dashed #ccc',
+                      padding: '10px',
+                    }}
+                  >
+                    <p style={{ fontSize: '12px', color: '#999' }}>
+                      Case 2: System Message (Bubble: false, Position: left - Default)
+                    </p>
+                    <MessageView
+                      isBubble={false}
+                      position="left"
+                      content="Vue 3 是一个用于构建用户界面的渐进式框架。它建立在标准 HTML、CSS 和 JavaScript 之上，并提供了一套声明式的、组件化的编程模型，帮助你高效地开发用户界面。Vue 3 引入了组合式 API (Composition API)，这使得代码组织和逻辑复用变得更加容易，特别是在大型项目中。此外，Vue 3 在性能方面也有显著提升，更小的包体积和更快的渲染速度。"
+                    />
+                  </div>
+
+                  {/* Case 3: Bot message (Bubble, Left) - Hypothetical */}
+                  <div
+                    style={{
+                      marginBottom: '20px',
+                      border: '1px dashed #ccc',
+                      padding: '10px',
+                    }}
+                  >
+                    <p style={{ fontSize: '12px', color: '#999' }}>
+                      Case 3: Bot Message (Bubble: true, Position: left)
+                    </p>
+                    <MessageView
+                      isBubble={true}
+                      position="left"
+                      content="当然可以。这是一个气泡样式的左侧消息。"
+                    />
+                  </div>
+
+                  <SvgIcon src="timer.svg" class="test-svg" style="color: red;" />
+
+                  <hr />
+                  <h3>Streaming Markdown Demo</h3>
+                  <StreamingMarkdown
+                    content={sample}
+                    plugins={plugins}
+                    markdownOptions={markdownOptions}
                   />
                 </div>
-
-                {/* Case 2: Bot message (Full Width, Left) */}
-                <div
-                  style={{
-                    marginBottom: '20px',
-                    border: '1px dashed #ccc',
-                    padding: '10px',
-                  }}
-                >
-                  <p style={{ fontSize: '12px', color: '#999' }}>
-                    Case 2: System Message (Bubble: false, Position: left - Default)
-                  </p>
-                  <MessageView
-                    isBubble={false}
-                    position="left"
-                    content="Vue 3 是一个用于构建用户界面的渐进式框架。它建立在标准 HTML、CSS 和 JavaScript 之上，并提供了一套声明式的、组件化的编程模型，帮助你高效地开发用户界面。Vue 3 引入了组合式 API (Composition API)，这使得代码组织和逻辑复用变得更加容易，特别是在大型项目中。此外，Vue 3 在性能方面也有显著提升，更小的包体积和更快的渲染速度。"
-                  />
-                </div>
-
-                {/* Case 3: Bot message (Bubble, Left) - Hypothetical */}
-                <div
-                  style={{
-                    marginBottom: '20px',
-                    border: '1px dashed #ccc',
-                    padding: '10px',
-                  }}
-                >
-                  <p style={{ fontSize: '12px', color: '#999' }}>
-                    Case 3: Bot Message (Bubble: true, Position: left)
-                  </p>
-                  <MessageView
-                    isBubble={true}
-                    position="left"
-                    content="当然可以。这是一个气泡样式的左侧消息。"
-                  />
-                </div>
-
-                <SvgIcon src="timer.svg" class="test-svg" style="color: red;" />
-
-                <hr />
-                <h3>Streaming Markdown Demo</h3>
-                <StreamingMarkdown
-                  content={sample}
-                  plugins={plugins}
-                  markdownOptions={markdownOptions}
-                />
               </div>
             ),
           }}

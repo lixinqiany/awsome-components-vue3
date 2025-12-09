@@ -38,8 +38,30 @@
   flex-shrink: 0;
   padding: 12px;
   border-top: 1px solid #efeff5;
-  background-color: #fafafa;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+@media (prefers-color-scheme: dark) {
+  .splitContainer {
+    background-color: #151414;
+  }
+
+  .sidebar {
+    background-color: #1e1e1e;
+    border-right: 2px solid #333;
+  }
+
+  .sidebarHeader {
+    border-bottom: 1px solid #333;
+  }
+
+  .sidebarFooter {
+    border-top: 1px solid #333;
+  }
+
+  :global(.n-split__resize-trigger) {
+    background-color: #333 !important;
+  }
 }
