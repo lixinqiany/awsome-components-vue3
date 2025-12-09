@@ -72,12 +72,12 @@
 }
 
 @media (prefers-color-scheme: dark) {
-  .bubble {
+  .messageColumn .content.bubble {
     background-color: #383636;
     color: #ffffff;
   }
 
-  .fullWidth {
+  .messageColumn .content.fullWidth {
     background-color: #151414;
     color: #ffffff;
   }
