@@ -42,14 +42,16 @@ export default defineComponent({
           onUpdateSize={handleUpdateSize}
         >
           {{
-            '1': () => (
-              <div class={styles.sidebar}>
-                <header class={styles.sidebarHeader}>{slots.sidebarHeader?.()}</header>
-                <main class={styles.sidebarMain}>{slots.sidebarMain?.()}</main>
-                <footer class={styles.sidebarFooter}>{slots.sidebarFooter?.()}</footer>
-              </div>
-            ),
-            '2': () => slots.default?.() ?? <div>Content Area (Empty)</div>,
+            '1': () =>
+              slots.sidebar?.() ?? (
+                <div class={styles.sidebar}>
+                  <header class={styles.sidebarHeader}>{slots.sidebarHeader?.()}</header>
+                  <main class={styles.sidebarMain}>{slots.sidebarMain?.()}</main>
+                  <footer class={styles.sidebarFooter}>{slots.sidebarFooter?.()}</footer>
+                </div>
+              ),
+
+            '2': () => slots.content?.() ?? <div>Content Area (Empty)</div>,
           }}
         </NSplit>
       </div>
