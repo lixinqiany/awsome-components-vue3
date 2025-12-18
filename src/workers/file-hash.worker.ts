@@ -19,6 +19,8 @@ export type FileHashComputationResult = {
 
 export type FileHashComputationProgress = {
   type: 'progress';
+  /** @description the name of the file */
+  fileName: string;
   /** @description the current chunk index (0-based) */
   currentChunk: number;
   /** @description the total number of chunks */
@@ -27,6 +29,8 @@ export type FileHashComputationProgress = {
 
 export type FileHashComputationError = {
   type: 'error';
+  /** @description the name of the file */
+  fileName: string;
   /** @description the error message */
   errorMessage: string;
   /** @description the error type */
@@ -49,7 +53,12 @@ self.onmessage = async (e: MessageEvent<FileHashComputationItem>) => {
       const chunk = file.slice(start, end);
       const chunkBuffer = await chunk.arrayBuffer();
       spark.append(chunkBuffer);
-      self.postMessage({ type: 'progress', currentChunk, totalChunks: chunks });
+      self.postMessage({
+        type: 'progress',
+        fileName: file.name,
+        currentChunk,
+        totalChunks: chunks,
+      });
       currentChunk++;
       if (currentChunk < chunks) {
         loadNext();
@@ -61,7 +70,7 @@ self.onmessage = async (e: MessageEvent<FileHashComputationItem>) => {
     } catch (err: unknown) {
       const errorMessage = err instanceof Error ? err.message : '计算Hash时发生未知错误';
       const errorType = err instanceof Error ? err.name : 'UnknownError';
-      self.postMessage({ type: 'error', errorType, errorMessage });
+      self.postMessage({ type: 'error', fileName: file.name, errorType, errorMessage });
     }
   };
 
@@ -70,5 +79,11 @@ self.onmessage = async (e: MessageEvent<FileHashComputationItem>) => {
 
 self.onerror = (e) => {
   const message = typeof e === 'string' ? e : (e as ErrorEvent).message;
-  self.postMessage({ type: 'error', errorType: 'WorkerUncaughtError', errorMessage: message });
+  // Note: we can't easily get the filename here in global onerror
+  self.postMessage({
+    type: 'error',
+    fileName: 'unknown',
+    errorType: 'WorkerUncaughtError',
+    errorMessage: message,
+  });
 };
